@@ -28,7 +28,7 @@ function CurrencyExchange() {
         e.target.value === '' ? setFinalAmountFromTo('') : (
             axios.request(options).then((response) => {
                 let exchangeRate = response.data['Realtime Currency Exchange Rate']['5. Exchange Rate']
-                setFinalAmountFromTo(exchangeRate * e.target.value)
+                setFinalAmountFromTo((exchangeRate * e.target.value).toFixed(3))
             }).catch((error) => {
                 console.error(error)
             }))
@@ -52,7 +52,7 @@ function CurrencyExchange() {
         e.target.value === '' ? setFinalAmountToFrom('') : (
             axios.request(options).then((response) => {
                 let exchangeRate = response.data['Realtime Currency Exchange Rate']['5. Exchange Rate']
-                setFinalAmountToFrom(exchangeRate * e.target.value)
+                setFinalAmountToFrom((exchangeRate * e.target.value).toFixed(3))
             }).catch((error) => {
                 console.error(error)
             })
