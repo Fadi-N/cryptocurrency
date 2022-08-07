@@ -1,9 +1,9 @@
-import CurrencyExchange from "./components/CurrencyExchange";
+import CurrencyTracker from "./components/CurrencyTracker";
 
 const App = () => {
   return (
     <div className="App">
-        <CurrencyExchange/>
+        <CurrencyTracker/>
     </div>
   );
 }
