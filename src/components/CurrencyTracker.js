@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
+import {Link} from "react-router-dom";
 
-function CurrencyTracker() {
+function CurrencyTracker({getCoinName}) {
     const [data, setData] = useState([])
     const [search, setSearch] = useState('')
 
@@ -9,7 +10,7 @@ function CurrencyTracker() {
         const options = {
             method: 'GET',
             url: 'https://coingecko.p.rapidapi.com/coins/markets',
-            params: {vs_currency: 'pln', page: '1', per_page: '20', order: 'market_cap_desc'},
+            params: {vs_currency: 'pln', page: '1', per_page: '5', order: 'market_cap_desc'},
             headers: {
                 'X-RapidAPI-Key': 'a81410a48fmshde406f56ec3622ep12f667jsnf6d259e85b24',
                 'X-RapidAPI-Host': 'coingecko.p.rapidapi.com'
@@ -24,30 +25,30 @@ function CurrencyTracker() {
         });
     }, [search])
 
-    const searchChangeState = (e) =>{
+    const searchChangeState = (e) => {
         setSearch(e.target.value)
     }
 
     const ASCSort = (e) => {
-        if (e.target.name == 'name'){
+        if (e.target.name == 'name') {
             setData([...data].sort((coinA, coinB) => coinA.name > coinB.name ? 1 : -1))
-        }else if (e.target.name == 'price'){
+        } else if (e.target.name == 'price') {
             setData([...data].sort((coinA, coinB) => coinA.current_price > coinB.current_price ? 1 : -1))
-        }else if (e.target.name == 'day'){
+        } else if (e.target.name == 'day') {
             setData([...data].sort((coinA, coinB) => coinA.price_change_percentage_24h > coinB.price_change_percentage_24h ? 1 : -1))
-        }else if (e.target.name == 'cap'){
+        } else if (e.target.name == 'cap') {
             setData([...data].sort((coinA, coinB) => coinA.market_cap > coinB.market_cap ? 1 : -1))
         }
     }
 
     const DESCSort = (e) => {
-        if (e.target.name == 'name'){
+        if (e.target.name == 'name') {
             setData([...data].sort((coinA, coinB) => coinA.name > coinB.name ? -1 : 1))
-        }else if (e.target.name == 'price'){
+        } else if (e.target.name == 'price') {
             setData([...data].sort((coinA, coinB) => coinA.current_price > coinB.current_price ? -1 : 1))
-        }else if (e.target.name == 'day'){
+        } else if (e.target.name == 'day') {
             setData([...data].sort((coinA, coinB) => coinA.price_change_percentage_24h > coinB.price_change_percentage_24h ? -1 : 1))
-        }else if (e.target.name == 'cap'){
+        } else if (e.target.name == 'cap') {
             setData([...data].sort((coinA, coinB) => coinA.market_cap > coinB.market_cap ? -1 : 1))
         }
     }
@@ -100,6 +101,11 @@ function CurrencyTracker() {
                                         <td style={{color: "red"}}>{coin.price_change_percentage_24h.toFixed(2)} %</td>
                                 }
                                 <td>{coin.market_cap}</td>
+                                <td>
+                                    <Link to={`/moreInfo/${coin.id}`}>
+                                        <button onClick={() => getCoinName(coin.id)}>More info</button>
+                                    </Link>
+                                </td>
                             </tr>
                             </tbody>
                         )
