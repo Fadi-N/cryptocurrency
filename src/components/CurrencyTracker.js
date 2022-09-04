@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Link} from "react-router-dom";
+import Sidebar from "./Sidebar";
+import "../CSS/currencyTracker.scss"
 
 function CurrencyTracker({getCoinName}) {
     const [data, setData] = useState([])
@@ -10,7 +12,7 @@ function CurrencyTracker({getCoinName}) {
         const options = {
             method: 'GET',
             url: 'https://coingecko.p.rapidapi.com/coins/markets',
-            params: {vs_currency: 'pln', page: '1', per_page: '5', order: 'market_cap_desc'},
+            params: {vs_currency: 'pln', page: '1', per_page: '100', order: 'market_cap_desc'},
             headers: {
                 'X-RapidAPI-Key': 'a81410a48fmshde406f56ec3622ep12f667jsnf6d259e85b24',
                 'X-RapidAPI-Host': 'coingecko.p.rapidapi.com'
@@ -54,65 +56,122 @@ function CurrencyTracker({getCoinName}) {
     }
 
     return (
-        <div>
-            <input type="text" onChange={(e) => searchChangeState(e)} placeholder="Search"/>
-            <table>
-                <thead>
-                <tr>
-                    <th>
-                        Coin
-                        <button name="name" onClick={(e) => ASCSort(e)}>ASC</button>
-                        <button name="name" onClick={(e) => DESCSort(e)}>DESC</button>
-                    </th>
-                    <th>
-                        Symbol
-                        <button name="name" onClick={(e) => ASCSort(e)}>ASC</button>
-                        <button name="name" onClick={(e) => DESCSort(e)}>DESC</button>
-                    </th>
-                    <th>
-                        Price
-                        <button name="price" onClick={(e) => ASCSort(e)}>ASC</button>
-                        <button name="price" onClick={(e) => DESCSort(e)}>DESC</button>
-                    </th>
-                    <th>
-                        24h
-                        <button name="day" onClick={(e) => ASCSort(e)}>ASC</button>
-                        <button name="day" onClick={(e) => DESCSort(e)}>DESC</button>
-                    </th>
-                    <th>
-                        Market Cap
-                        <button name="cap" onClick={(e) => ASCSort(e)}>ASC</button>
-                        <button name="cap" onClick={(e) => DESCSort(e)}>DESC</button>
-                    </th>
-                </tr>
-                </thead>
-                {
-                    data.map(coin => {
-                        return (
+        <>
+            <Sidebar/>
+            <div className="main-content position-relative my-3">
+                <div className="container-fluid ">
+                    <div className="col-md-12">
+                        <div className="card">
+                            <div className="card-header">
+                                <div>
+                                    <input className="form-control" type="text" onChange={(e) => searchChangeState(e)}
+                                           placeholder="Search"/>
+                                </div>
+                            </div>
+                            <div className="card-body">
+                                <div className="table-responsive">
+                                    <table className="table align-items-center">
+                                        <thead>
+                                        <tr className="head-sort-buttons">
+                                            <th class="text-uppercase text-secondary">
+                                                Coin
+                                                <button className="btn btn-default" name="name"
+                                                        onClick={(e) => ASCSort(e)}><i
+                                                    className="bi bi-sort-alpha-down"></i></button>
+                                                <button className="btn btn-default" name="name"
+                                                        onClick={(e) => DESCSort(e)}><i
+                                                    className="bi bi-sort-alpha-up"></i>
+                                                </button>
+                                            </th>
+                                            <th class="text-uppercase text-secondary align-middle text-center">
+                                                Symbol
+                                                <button className="btn btn-default" name="name"
+                                                        onClick={(e) => ASCSort(e)}><i
+                                                    className="bi bi-sort-alpha-down"></i></button>
+                                                <button className="btn btn-default" name="name"
+                                                        onClick={(e) => DESCSort(e)}><i
+                                                    className="bi bi-sort-alpha-up"></i>
+                                                </button>
+                                            </th>
+                                            <th class="text-uppercase text-secondary align-middle text-center">
+                                                Price
+                                                <button className="btn btn-default" name="price"
+                                                        onClick={(e) => ASCSort(e)}><i
+                                                    className="bi bi-sort-numeric-down"></i></button>
+                                                <button className="btn btn-default" name="price"
+                                                        onClick={(e) => DESCSort(e)}><i
+                                                    className="bi bi-sort-numeric-up"></i>
+                                                </button>
+                                            </th>
+                                            <th class="text-uppercase text-secondary align-middle text-center">
+                                                24h
+                                                <button className="btn btn-default" name="day"
+                                                        onClick={(e) => ASCSort(e)}><i
+                                                    className="bi bi-sort-numeric-down"></i></button>
+                                                <button className="btn btn-default" name="day"
+                                                        onClick={(e) => DESCSort(e)}><i
+                                                    className="bi bi-sort-numeric-up"></i>
+                                                </button>
+                                            </th>
+                                            <th class="text-uppercase text-secondary align-middle text-center">
+                                                Market Cap
+                                                <button className="btn btn-default btn-sm" name="cap"
+                                                        onClick={(e) => ASCSort(e)}><i
+                                                    className="bi bi-sort-numeric-down"></i></button>
+                                                <button className="btn btn-default btn-sm" name="cap"
+                                                        onClick={(e) => DESCSort(e)}><i
+                                                    className="bi bi-sort-numeric-up"></i>
+                                                </button>
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        {
+                                            data.map(coin => {
+                                                return (
 
-                            <tbody key={coin.id}>
-                            <tr>
-                                <td><img src={`${coin.image}`}/> <p>{coin.name}</p></td>
-                                <td>{coin.symbol}</td>
-                                <td>{coin.current_price}</td>
-                                {
-                                    coin.price_change_percentage_24h > 0 ?
-                                        <td style={{color: "green"}}>{coin.price_change_percentage_24h.toFixed(2)} %</td> :
-                                        <td style={{color: "red"}}>{coin.price_change_percentage_24h.toFixed(2)} %</td>
-                                }
-                                <td>{coin.market_cap}</td>
-                                <td>
-                                    <Link to={`/moreInfo/${coin.id}`}>
-                                        <button onClick={() => getCoinName(coin.id)}>More info</button>
-                                    </Link>
-                                </td>
-                            </tr>
-                            </tbody>
-                        )
-                    })
-                }
-            </table>
-        </div>
+                                                    <tbody key={coin.id}>
+                                                    <tr>
+                                                        <td>
+                                                            <div className="d-flex px-2 py-1 coin-img">
+                                                                <div class="me-2">
+                                                                    <img src={`${coin.image}`}/>
+                                                                </div>
+                                                                <p className="text-center">{coin.name}</p>
+                                                            </div>
+                                                        </td>
+                                                        <td className="align-middle text-center">{coin.symbol}</td>
+                                                        <td className="align-middle text-center">{coin.current_price}</td>
+                                                        {
+                                                            coin.price_change_percentage_24h > 0 ?
+                                                                <td className="align-middle text-center"
+                                                                    style={{color: "green"}}>{coin.price_change_percentage_24h.toFixed(2)} %</td> :
+                                                                <td className="align-middle text-center"
+                                                                    style={{color: "red"}}>{coin.price_change_percentage_24h.toFixed(2)} %</td>
+                                                        }
+                                                        <td className="align-middle text-center">{coin.market_cap}</td>
+                                                        <td className="align-middle text-center">
+                                                            <Link to={`/moreInfo/${coin.id}`}>
+                                                                <button className="btn btn-default btn-sm more-info"
+                                                                        onClick={() => getCoinName(coin.id)}><i
+                                                                    className="bi bi-info-circle"></i>
+                                                                </button>
+                                                            </Link>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                )
+                                            })
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+
     );
 }
 

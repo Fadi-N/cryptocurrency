@@ -1,0 +1,30 @@
+.navbar {
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  box-shadow: 0 7px 14px 0 rgba(65, 69, 88, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  background-color: #fff;
+  .li{
+    cursor: pointer;
+  }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    &.active{
+      color: white;
+      background-color: #cb0c9f;
+    }
+  }
+
+}
+
+.navbar-vertical.navbar-expand-xs {
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 15.625rem !important;
+  padding: 0;
+}

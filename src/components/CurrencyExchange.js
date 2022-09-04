@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from "axios";
+import Sidebar from "./Sidebar";
 
 function CurrencyExchange() {
 
@@ -60,38 +61,41 @@ function CurrencyExchange() {
     }
 
     return (
-        <div>
-            <input type="number" value={finalAmountToFrom} onChange={(e) => convertFromTo(e)} placeholder="from"/>
-            <select name="from" onChange={
-                (e) => e.target.value === "None" ? setExchangeFrom(null) : setExchangeFrom(e.target.value)
-            }>
-                {
-                    currenciesSymbols.map((currencySymbol, index) => {
-                        return (
-                            exchangeTo === currencySymbol ?
-                                <option key={index} style={{display: "none"}} disabled>{currencySymbol}</option> : (
-                                    <option key={index}>{currencySymbol}</option>
-                                )
-                        )
-                    })
-                }
-            </select>
-            <input type="number" value={finalAmountFromTo} onChange={(e) => convertToFrom(e)} placeholder="to"/>
-            <select name="to" onChange={
-                (e) => e.target.value === "None" ? setExchangeTo(null) : setExchangeTo(e.target.value)
-            }>
-                {
-                    currenciesSymbols.map((currencySymbol, index) => {
-                        return (
-                            exchangeFrom === currencySymbol ?
-                                <option key={index} style={{display: "none"}} disabled>{currencySymbol}</option> : (
-                                    <option key={index}>{currencySymbol}</option>
-                                )
-                        )
-                    })
-                }
-            </select>
-        </div>
+        <>
+            <Sidebar/>
+            <div>
+                <input type="number" value={finalAmountToFrom} onChange={(e) => convertFromTo(e)} placeholder="from"/>
+                <select name="from" onChange={
+                    (e) => e.target.value === "None" ? setExchangeFrom(null) : setExchangeFrom(e.target.value)
+                }>
+                    {
+                        currenciesSymbols.map((currencySymbol, index) => {
+                            return (
+                                exchangeTo === currencySymbol ?
+                                    <option key={index} style={{display: "none"}} disabled>{currencySymbol}</option> : (
+                                        <option key={index}>{currencySymbol}</option>
+                                    )
+                            )
+                        })
+                    }
+                </select>
+                <input type="number" value={finalAmountFromTo} onChange={(e) => convertToFrom(e)} placeholder="to"/>
+                <select name="to" onChange={
+                    (e) => e.target.value === "None" ? setExchangeTo(null) : setExchangeTo(e.target.value)
+                }>
+                    {
+                        currenciesSymbols.map((currencySymbol, index) => {
+                            return (
+                                exchangeFrom === currencySymbol ?
+                                    <option key={index} style={{display: "none"}} disabled>{currencySymbol}</option> : (
+                                        <option key={index}>{currencySymbol}</option>
+                                    )
+                            )
+                        })
+                    }
+                </select>
+            </div>
+        </>
     );
 }
 

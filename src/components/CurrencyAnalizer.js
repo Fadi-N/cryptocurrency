@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Chart, registerables} from "chart.js";
 import {Line} from 'react-chartjs-2'
+import Sidebar from "./Sidebar";
 
 Chart.register(...registerables);
 
@@ -10,7 +11,8 @@ function CurrencyAnalizer() {
     const initialValues = {
         coinName: '',
         days: 1,
-        currencyShortcut: ''
+        currencyShortcut: '',
+        color: ''
     }
 
     const [values, setValues] = useState(initialValues)
@@ -55,8 +57,8 @@ function CurrencyAnalizer() {
                 label: `${values.coinName}`,
                 data: response.data.prices.map(price => price[1]),
                 fill: false,
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: `${values.color}`,
+                backgroundColor: `${values.color}50`,
             })
 
             setChartData({
@@ -68,20 +70,22 @@ function CurrencyAnalizer() {
         });
     }
 
-    console.log(JSON.stringify(chartData))
+    //console.log(JSON.stringify(chartData))
+    console.log(values)
     return (
-        <div>
+        <>
+            <Sidebar/>
+            <div>
+                <Line data={chartData}/>
+                <input type="text" name="coinName" value={values.coinName} placeholder="coin" onChange={handleChanges}/>
+                <input type="text" name="days" value={values.days} placeholder="days" onChange={handleChanges}/>
+                <input type="text" name="currencyShortcut" value={values.currencyShortcut} placeholder="currency" onChange={handleChanges}/>
+                <input type="color" name="color" value={values.color} placeholder="color" onChange={handleChanges}/>
+                <button onClick={() => handleClick()}>+</button>
 
-            <Line data={chartData}/>
+            </div>
+        </>
 
-            <input type="text" name="coinName" value={values.coinName} onChange={handleChanges}/>
-            <input type="text" name="days" value={values.days} onChange={handleChanges}/>
-            <p>days</p>
-            <p>currency</p>
-            <input type="text" name="currencyShortcut" value={values.currencyShortcut} onChange={handleChanges}/>
-            <button onClick={() => handleClick()}>+</button>
-
-        </div>
     );
 }
 
