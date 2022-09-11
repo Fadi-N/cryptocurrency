@@ -1,0 +1,36 @@
+.exchange-card {
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  box-shadow: 0 7px 14px 0 rgba(65, 69, 88, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  left: 17.125rem;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  .exchange-card-body {
+    .buttons-for-exchange {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      > input, select {
+        float: left;
+        margin-right: 3px;
+      }
+
+      > input {
+        width: auto;
+      }
+
+      > select {
+        width: auto;
+      }
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .sidenav.fixed-start ~ .main-content {
+    margin-left: 17.125rem;
+  }
+}

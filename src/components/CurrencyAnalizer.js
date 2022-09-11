@@ -3,15 +3,18 @@ import axios from "axios";
 import {Chart, registerables} from "chart.js";
 import {Line} from 'react-chartjs-2'
 import Sidebar from "./Sidebar";
+import "../CSS/currencyAnalizer.scss"
 
 Chart.register(...registerables);
 
 
 function CurrencyAnalizer() {
+
     const initialValues = {
         coinName: '',
         days: 1,
         currencyShortcut: '',
+        fill: false,
         color: ''
     }
 
@@ -25,13 +28,32 @@ function CurrencyAnalizer() {
 
     const handleChanges = (e) => {
         const {name, value} = e.target;
-        setValues({
-            ...values,
-            [name]: value,
+
+        e.target.name === "fill" ?
+            setValues(prevState => ({
+                ...values,
+                [name]: !prevState.fill,
+            }))
+            :
+            setValues({
+                ...values,
+                [name]: value,
+            })
+    }
+
+    const handleFillAllChanges = (e) => {
+        chartData.datasets.map(mappedData => {
+            console.log(mappedData)
+            mappedData.fill = !mappedData.fill
+
+        })
+        setChartData({
+            labels: chartData.labels,
+            datasets: [...chartData.datasets]
         })
     }
 
-    const handleClick = () =>{
+    const handleClick = () => {
         const options = {
             method: 'GET',
             url: `https://coingecko.p.rapidapi.com/coins/${values.coinName}/market_chart`,
@@ -56,7 +78,7 @@ function CurrencyAnalizer() {
             chartData.datasets.push({
                 label: `${values.coinName}`,
                 data: response.data.prices.map(price => price[1]),
-                fill: false,
+                fill: values.fill,
                 borderColor: `${values.color}`,
                 backgroundColor: `${values.color}50`,
             })
@@ -75,13 +97,44 @@ function CurrencyAnalizer() {
     return (
         <>
             <Sidebar/>
-            <div>
-                <Line data={chartData}/>
-                <input type="text" name="coinName" value={values.coinName} placeholder="coin" onChange={handleChanges}/>
-                <input type="text" name="days" value={values.days} placeholder="days" onChange={handleChanges}/>
-                <input type="text" name="currencyShortcut" value={values.currencyShortcut} placeholder="currency" onChange={handleChanges}/>
-                <input type="color" name="color" value={values.color} placeholder="color" onChange={handleChanges}/>
-                <button onClick={() => handleClick()}>+</button>
+            <div className="main-content">
+                <div className="card analizer-card position-fixed my-3 me-3">
+                    <div className="card-body analizer-card-body">
+                        <div className="display-chart mb-4">
+                            <Line data={chartData}/>
+                        </div>
+                        <div className="buttons-for-chart">
+                            <input className="form-control form-control-sm" type="text" name="coinName"
+                                   value={values.coinName} placeholder="coin" onChange={handleChanges}/>
+                            <input className="form-control form-control-sm" type="text" name="days" value={values.days}
+                                   placeholder="days" onChange={handleChanges}/>
+                            <input className="form-control form-control-sm" type="text" name="currencyShortcut"
+                                   value={values.currencyShortcut} placeholder="currency"
+                                   onChange={handleChanges}/>
+                            <input className="form-control form-control-sm form-control-color input-color" type="color"
+                                   name="color"
+                                   value={values.color}
+                                   placeholder="color" onChange={handleChanges}/>
+                            <button className="btn btn-default" onClick={() => handleClick()}><i
+                                className="bi bi-plus-circle"></i></button>
+                            <div className="form-check form-switch fillCheck">
+                                <input className="form-check-input" id="flexSwitchCheckDefault" type="checkbox"
+                                       name="fill"
+                                       onChange={handleChanges}
+                                       value={values.fill}/>
+                                <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Fill</label>
+                            </div>
+                            <div className="form-check form-switch fillCheck">
+                                <input className="form-check-input" id="flexSwitchCheckDefault" type="checkbox"
+                                       name="fill"
+                                       onChange={handleFillAllChanges}
+                                       value={values.fill}/>
+                                <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Fill all</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
         </>
