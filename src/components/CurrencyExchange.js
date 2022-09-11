@@ -65,7 +65,7 @@ function CurrencyExchange() {
 
     return (
         <>
-            <Sidebar/>
+            <Sidebar image={''}/>
             <div className="main-content">
                 <div className="card exchange-card position-fixed my-3 me-3">
                     <div className="card-body exchange-card-body">

@@ -57,7 +57,7 @@ function CurrencyTracker({getCoinName}) {
 
     return (
         <>
-            <Sidebar/>
+            <Sidebar image={''}/>
             <div className="main-content position-relative my-3">
                 <div className="container-fluid ">
                     <div className="row">

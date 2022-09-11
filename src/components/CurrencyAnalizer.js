@@ -96,7 +96,7 @@ function CurrencyAnalizer() {
     console.log(values)
     return (
         <>
-            <Sidebar/>
+            <Sidebar image={''}/>
             <div className="main-content">
                 <div className="card analizer-card position-fixed my-3 me-3">
                     <div className="card-body analizer-card-body">

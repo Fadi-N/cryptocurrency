@@ -39,7 +39,7 @@ function MoreInfoAboutCoin({passedCoinName}) {
 
     return (
         <>
-            <Sidebar/>
+            <Sidebar image={image}/>
             <div className="main-content position-relative my-3">
                 <div className="container-fluid ">
                     <div className="row">
@@ -49,40 +49,39 @@ function MoreInfoAboutCoin({passedCoinName}) {
                                     <div className="display-chart mb-4">
                                         <LineChartForMoreInfo coinName={passedCoinName}/>
                                     </div>
-                                    <img src={`${image.small}`} alt=""/>
-                                    <table>
+                                    <table className="table align-items-center">
                                         <thead>
                                         <tr>
-                                            <th>7 days</th>
-                                            <th>14 days</th>
-                                            <th>30 days</th>
-                                            <th>1 year</th>
+                                            <th className="text-uppercase text-secondary align-middle text-center">7 days</th>
+                                            <th className="text-uppercase text-secondary align-middle text-center">14 days</th>
+                                            <th className="text-uppercase text-secondary align-middle text-center">30 days</th>
+                                            <th className="text-uppercase text-secondary align-middle text-center">1 year</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td>
+                                            <td className="align-middle text-center">
                                                 {
                                                     marketData.price_change_percentage_7d > 0 ?
                                                         <p style={{color: "green"}}>{Number(marketData.price_change_percentage_7d).toFixed(2)} %</p> :
                                                         <p style={{color: "red"}}>{Number(marketData.price_change_percentage_7d).toFixed(2)} %</p>
                                                 }
                                             </td>
-                                            <td>
+                                            <td className="align-middle text-center">
                                                 {
                                                     marketData.price_change_percentage_14d > 0 ?
                                                         <p style={{color: "green"}}>{Number(marketData.price_change_percentage_14d).toFixed(2)} %</p> :
                                                         <p style={{color: "red"}}>{Number(marketData.price_change_percentage_14d).toFixed(2)} %</p>
                                                 }
                                             </td>
-                                            <td>
+                                            <td className="align-middle text-center">
                                                 {
                                                     marketData.price_change_percentage_30d > 0 ?
                                                         <p style={{color: "green"}}>{Number(marketData.price_change_percentage_30d).toFixed(2)} %</p> :
                                                         <p style={{color: "red"}}>{Number(marketData.price_change_percentage_30d).toFixed(2)} %</p>
                                                 }
                                             </td>
-                                            <td>
+                                            <td className="align-middle text-center">
                                                 {
                                                     marketData.price_change_percentage_1y > 0 ?
                                                         <p style={{color: "green"}}>{Number(marketData.price_change_percentage_1y).toFixed(2)} %</p> :

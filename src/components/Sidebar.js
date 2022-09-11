@@ -2,7 +2,8 @@ import SidebarData from "./SidebarData";
 import "../CSS/sidebar.scss"
 import {NavLink} from "react-router-dom";
 
-function Sidebar() {
+function Sidebar({image}) {
+    console.log(image.large)
     return (
         <div className="sidenav navbar navbar-vertical navbar-expand-xs my-3 fixed-start ms-3">
             <div className="navbar-collapse">
@@ -20,8 +21,11 @@ function Sidebar() {
                         })
                     }
                 </ul>
-            </div>
+                {
+                    image.large != undefined ? <img src={`${image.large}`} alt=""/> : null
+                }
 
+            </div>
         </div>
 
     )

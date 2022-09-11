@@ -43,8 +43,8 @@ function LineChartForMoreInfo({coinName}) {
                 label: `${coinName}`,
                 data: pricesData.map(price => price[1]),
                 fill: true,
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: 'rgb(203, 12, 159)',
+                backgroundColor: 'rgba(203, 12, 159, 0.5)',
             }
         ]
     }
